@@ -1,9 +1,16 @@
-/* styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: system-ui, sans-serif;
-  background-color: #ffffff;
-  color: #222;
+:root {
+  --ddagl-indigo: #4f46e5;
+  --ddagl-gold: #f59e0b;
 }
-/* Global Tailwind styles */
+
+.bg-ddagl-indigo {
+  background-color: var(--ddagl-indigo);
+}
+.text-ddagl-indigo {
+  color: var(--ddagl-indigo);
+}
+/* ... autres styles ... */
