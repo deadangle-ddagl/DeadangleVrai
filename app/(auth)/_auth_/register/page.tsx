@@ -1,4 +1,4 @@
-// Register// app/_auth_/register/page.tsx
+// Register// app/(auth)/_auth_/register/page.tsx
 'use client'
 
 import Link from 'next/link'
