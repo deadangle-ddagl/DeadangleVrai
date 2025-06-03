@@ -1,25 +1,31 @@
-// app/page.tsx
-import Link from 'next/link'
+# 🧠 DEAD ANGLE — Marketplace Numérique Sarcastique
 
-export default function HomePage() {
-  return (
-    <main className="min-h-screen flex flex-col items-center justify-center text-center px-4">
-      <h1 className="text-4xl md:text-6xl font-bold text-ddagl-indigo">Bienvenue sur Dead Angle</h1>
-      <p className="mt-4 text-lg text-gray-600 max-w-xl">
-        Votre marketplace numérique est opérationnelle. Explorez, vendez, transférez, gérez.
-      </p>
-      <div className="mt-8 space-x-4">
-        <Link href="/products">
-          <button className="px-6 py-3 bg-ddagl-indigo text-white rounded-xl hover:bg-ddagl-gold transition-colors">
-            Voir les Produits
-          </button>
-        </Link>
-        <Link href="/dashboard">
-          <button className="px-6 py-3 border border-ddagl-indigo text-ddagl-indigo rounded-xl hover:bg-ddagl-indigo hover:text-white transition-colors">
-            Aller au Dashboard
-          </button>
-        </Link>
-      </div>
-    </main>
-  )
-}
+Dead Angle est une plateforme décalée de vente, transfert et gestion de produits numériques absurdes à l’aide d’une monnaie interne : les points **DDAGL**.
+
+## ⚙️ Stack Technique
+
+- [x] Next.js 14 (App Router)
+- [x] TailwindCSS
+- [x] Prisma + PostgreSQL
+- [x] Authentification avec NextAuth.js
+- [x] Monnaie interne DDAGL (points, transferts, dons)
+- [x] Système de composants modulaires
+- [x] Forum Flarum (intégration prévue)
+
+## 🗂 Structure
+
+- `app/` : Pages (Lab, Produits, Dashboard…)
+- `components/` : UI et composants fonctionnels
+- `lib/` : Helpers (DB, auth, notifications)
+- `prisma/` : Schéma, seed, migrations
+- `styles/` : Styles globaux (tailwind + thèmes)
+- `docs/` : Documentation technique
+
+## 📦 Installation
+
+```bash
+git clone https://github.com/votre-org/deadangle.git
+cd deadangle
+npm install
+npx prisma db push
+npm run dev
