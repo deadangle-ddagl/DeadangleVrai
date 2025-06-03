@@ -1,39 +1,32 @@
-import { auth } from '@/lib/auth'
-import { Card, BalanceChart, RecentTransactions } from '@/components/dashboard'
-import { prisma } from '@/lib/db'
+// app/dashboard/page.tsx
+'use client'
 
-export default async function DashboardPage() {
-  const session = await auth()
-  if (!session?.user) return redirect('/login')
+import Link from 'next/link'
 
-  const [balance, transactions] = await Promise.all([
-    prisma.user.findUnique({
-      where: { id: session.user.id },
-      select: { ddagl: true }
-    }),
-    prisma.transaction.findMany({
-      where: { userId: session.user.id },
-      orderBy: { createdAt: 'desc' },
-      take: 5
-    })
-  ])
-
+export default function DashboardPage() {
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6 text-ddagl-indigo">
-        Mon Tableau de Bord
-      </h1>
-
-      <div className="grid gap-6 md:grid-cols-3">
-        <Card title="Solde DDAGL" value={balance?.ddagl || 0} icon="💰" />
-        <Card title="Produits" value={23} icon="🛍️" />
-        <Card title="Transactions" value={transactions.length} icon="📊" />
+    <main className="min-h-screen px-4 py-8">
+      <h1 className="text-3xl font-bold text-ddagl-indigo mb-6">Dashboard</h1>
+      <div className="grid gap-6 sm:grid-cols-2">
+        <Link href="/dashboard/profile">
+          <div className="cursor-pointer p-6 border rounded-xl hover:shadow-lg transition bg-white">
+            <h2 className="text-xl font-semibold">Mon Profil</h2>
+            <p className="text-sm text-gray-600">Modifier mes infos, avatar et préférences.</p>
+          </div>
+        </Link>
+        <Link href="/dashboard/products">
+          <div className="cursor-pointer p-6 border rounded-xl hover:shadow-lg transition bg-white">
+            <h2 className="text-xl font-semibold">Mes Produits</h2>
+            <p className="text-sm text-gray-600">Voir, modifier ou supprimer mes produits absurdes.</p>
+          </div>
+        </Link>
+        <Link href="/dashboard/transactions">
+          <div className="cursor-pointer p-6 border rounded-xl hover:shadow-lg transition bg-white">
+            <h2 className="text-xl font-semibold">Transactions</h2>
+            <p className="text-sm text-gray-600">Historique des achats, ventes et transferts de points.</p>
+          </div>
+        </Link>
       </div>
-
-      <div className="mt-8 grid gap-8 md:grid-cols-2">
-        <BalanceChart />
-        <RecentTransactions transactions={transactions} />
-      </div>
-    </div>
+    </main>
   )
-}// Dashboard code
+}
