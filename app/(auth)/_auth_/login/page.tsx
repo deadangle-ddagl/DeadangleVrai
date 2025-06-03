@@ -1,54 +1,50 @@
 // app/(auth)/_auth_/login/page.tsx
+
 'use client'
 
-import Link from 'next/link'
 import { useState } from 'react'
+import Link from 'next/link'
 
 export default function LoginPage() {
-  const [form, setForm] = useState({ email: '', password: '' })
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Add login logic
-    console.log('Logging in:', form)
+    // TODO: remplacer par une logique d'authentification réelle
+    console.log('Login', { email, password })
   }
 
   return (
-    <>
-      <h1 className="text-2xl font-bold text-center mb-6 text-ddagl-indigo">Connexion</h1>
+    <div>
+      <h2 className="text-2xl font-bold text-center mb-6">Connexion</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
-          name="email"
           type="email"
           placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          className="w-full border rounded-xl p-3"
+          className="w-full border rounded-md px-4 py-2"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <input
-          name="password"
           type="password"
           placeholder="Mot de passe"
-          value={form.password}
-          onChange={handleChange}
-          className="w-full border rounded-xl p-3"
+          className="w-full border rounded-md px-4 py-2"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" className="w-full bg-ddagl-indigo text-white py-3 rounded-xl hover:bg-ddagl-gold transition">
+        <button type="submit" className="w-full bg-ddagl-indigo text-white py-2 rounded-md hover:bg-ddagl-gold transition-colors">
           Se connecter
         </button>
       </form>
-      <p className="mt-4 text-center text-sm text-gray-600">
+      <p className="text-sm text-center mt-4">
         Pas encore inscrit ?{' '}
-        <Link href="/_auth_/register" className="text-ddagl-indigo underline hover:text-ddagl-gold">
+        <Link href="/register" className="text-ddagl-indigo hover:underline">
           Créer un compte
         </Link>
       </p>
-    </>
+    </div>
   )
 }
