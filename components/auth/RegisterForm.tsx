@@ -2,84 +2,77 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button } from '@/components/ui/Button'
-import { Loader } from '@/components/ui/Loader'
+import Link from 'next/link'
+import { register } from '@/lib/auth'
 
 export default function RegisterForm() {
   const router = useRouter()
-  const [loading, setLoading] = useState(false)
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    password: ''
-  })
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirm, setConfirm] = useState('')
   const [error, setError] = useState<string | null>(null)
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true)
     setError(null)
 
+    if (password !== confirm) {
+      setError('Les mots de passe ne correspondent pas.')
+      return
+    }
+
     try {
-      const res = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(form)
-      })
-
-      const data = await res.json()
-
-      if (!res.ok) {
-        throw new Error(data.message || 'Erreur lors de la création du compte.')
+      const result = await register(email, password)
+      if (result?.error) {
+        setError(result.error)
+      } else {
+        router.push('/dashboard') // Rediriger vers le dashboard après inscription
       }
-
-      router.push('/(auth)/_auth_/login')
     } catch (err: any) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
+      setError('Une erreur est survenue.')
+      console.error(err)
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
-      <input
-        type="text"
-        name="name"
-        placeholder="Nom"
-        value={form.name}
-        onChange={handleChange}
-        required
-        className="w-full px-4 py-2 border rounded-xl"
-      />
+    <form onSubmit={handleSubmit} className="space-y-4">
       <input
         type="email"
-        name="email"
         placeholder="Email"
-        value={form.email}
-        onChange={handleChange}
+        className="w-full border rounded-md px-4 py-2"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         required
-        className="w-full px-4 py-2 border rounded-xl"
       />
       <input
         type="password"
-        name="password"
         placeholder="Mot de passe"
-        value={form.password}
-        onChange={handleChange}
+        className="w-full border rounded-md px-4 py-2"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         required
-        className="w-full px-4 py-2 border rounded-xl"
       />
-      {error && <p className="text-red-600">{error}</p>}
-      <Button type="submit" disabled={loading}>
-        {loading ? <Loader /> : 'Créer un compte'}
-      </Button>
+      <input
+        type="password"
+        placeholder="Confirmer le mot de passe"
+        className="w-full border rounded-md px-4 py-2"
+        value={confirm}
+        onChange={(e) => setConfirm(e.target.value)}
+        required
+      />
+
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+
+      <button type="submit" className="w-full bg-ddagl-indigo text-white py-2 rounded-md hover:bg-ddagl-gold transition-colors">
+        S'inscrire
+      </button>
+
+      <p className="text-sm text-center mt-4">
+        Déjà inscrit ?{' '}
+        <Link href="/login" className="text-ddagl-indigo hover:underline">
+          Se connecter
+        </Link>
+      </p>
     </form>
   )
 }
