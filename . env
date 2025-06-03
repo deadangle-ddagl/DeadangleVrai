@@ -1,0 +1,8 @@
+# URL de ton appli en local (utile pour next-auth, etc)
+NEXTAUTH_URL=http://localhost:3000
+
+# URL vers ta base de données PostgreSQL locale (ou cloud si tu en as une)
+DATABASE_URL=postgresql://user:password@localhost:5432/deadangle
+
+# Secret pour NextAuth (tu peux générer avec `openssl rand -hex 32` ou un site de génération de clés)
+NEXTAUTH_SECRET=ta_clef_secrete_pour_nextauth_ici
