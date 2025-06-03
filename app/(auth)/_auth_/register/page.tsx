@@ -1,63 +1,64 @@
-// Register// app/(auth)/_auth_/register/page.tsx
+// app/(auth)/_auth_/register/page.tsx
+
 'use client'
 
-import Link from 'next/link'
 import { useState } from 'react'
+import Link from 'next/link'
 
 export default function RegisterPage() {
-  const [form, setForm] = useState({ email: '', password: '', name: '' })
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirm, setConfirm] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Add registration logic
-    console.log('Registering:', form)
+    if (password !== confirm) {
+      alert("Les mots de passe ne correspondent pas.")
+      return
+    }
+
+    // TODO: remplacer par une logique d’inscription réelle
+    console.log('Register', { email, password })
   }
 
   return (
-    <>
-      <h1 className="text-2xl font-bold text-center mb-6 text-ddagl-indigo">Créer un compte</h1>
+    <div>
+      <h2 className="text-2xl font-bold text-center mb-6">Créer un compte</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
-          name="name"
-          type="text"
-          placeholder="Nom"
-          value={form.name}
-          onChange={handleChange}
-          className="w-full border rounded-xl p-3"
-          required
-        />
-        <input
-          name="email"
           type="email"
           placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          className="w-full border rounded-xl p-3"
+          className="w-full border rounded-md px-4 py-2"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <input
-          name="password"
           type="password"
           placeholder="Mot de passe"
-          value={form.password}
-          onChange={handleChange}
-          className="w-full border rounded-xl p-3"
+          className="w-full border rounded-md px-4 py-2"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" className="w-full bg-ddagl-indigo text-white py-3 rounded-xl hover:bg-ddagl-gold transition">
-          S’inscrire
+        <input
+          type="password"
+          placeholder="Confirmer le mot de passe"
+          className="w-full border rounded-md px-4 py-2"
+          value={confirm}
+          onChange={(e) => setConfirm(e.target.value)}
+          required
+        />
+        <button type="submit" className="w-full bg-ddagl-indigo text-white py-2 rounded-md hover:bg-ddagl-gold transition-colors">
+          S'inscrire
         </button>
       </form>
-      <p className="mt-4 text-center text-sm text-gray-600">
+      <p className="text-sm text-center mt-4">
         Déjà inscrit ?{' '}
-        <Link href="/_auth_/login" className="text-ddagl-indigo underline hover:text-ddagl-gold">
+        <Link href="/login" className="text-ddagl-indigo hover:underline">
           Se connecter
         </Link>
       </p>
-    </>
+    </div>
   )
-} page
+}
