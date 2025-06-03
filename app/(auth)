@@ -1,19 +1,8 @@
-import NextAuth from 'next-auth'
-import Credentials from 'next-auth/providers/credentials'
-import { prisma } from './db'
-import { compare } from 'bcryptjs'
-
-export const { handlers, auth } = NextAuth({
-  providers: [
-    Credentials({
-      async authorize(credentials) {
-        const user = await prisma.user.findUnique({ 
-          where: { email: credentials.email } 
-        })
-        return user && await compare(credentials.password, user.password) 
-          ? { id: user.id, email: user.email } 
-          : null
-      }
-    })
-  ]
-})
+// app/(auth).tsx
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-12">
+      <div className="w-full max-w-md bg-white p-6 rounded-2xl shadow-lg">{children}</div>
+    </div>
+  );
+}
