@@ -5,6 +5,9 @@
 :root {
   --ddagl-indigo: #4f46e5;
   --ddagl-gold: #f59e0b;
+  --ddagl-red: #ef4444;
+  --ddagl-green: #10b981;
+  --ddagl-bg: #f9fafb;
 }
 
 .bg-ddagl-indigo {
@@ -13,4 +16,27 @@
 .text-ddagl-indigo {
   color: var(--ddagl-indigo);
 }
-/* ... autres styles ... */
+.border-ddagl-indigo {
+  border-color: var(--ddagl-indigo);
+}
+.text-ddagl-gold {
+  color: var(--ddagl-gold);
+}
+.text-ddagl-red {
+  color: var(--ddagl-red);
+}
+.text-ddagl-green {
+  color: var(--ddagl-green);
+}
+
+.btn-ddagl {
+  @apply px-4 py-2 rounded-xl font-medium text-white bg-ddagl-indigo hover:bg-indigo-700 transition;
+}
+
+.card-ddagl {
+  @apply bg-white p-6 rounded-xl shadow-sm border border-gray-100;
+}
+
+.title-ddagl {
+  @apply text-xl font-semibold text-gray-900;
+}
