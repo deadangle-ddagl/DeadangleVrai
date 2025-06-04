@@ -1,23 +1,22 @@
-// app/account/page.tsx
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import LogoutButton from "@/components/auth/LogoutButton";
+'use client';
 
-export default async function AccountPage() {
-  const supabase = createServerComponentClient({ cookies });
-  const { data: { user } } = await supabase.auth.getUser();
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
+import LogoutButton from '@/components/auth/LogoutButton';
 
-  if (!user) {
-    return (
-      <div className="p-4 text-red-600">
-        Non connecté. <a href="/(auth)/login" className="underline">Se connecter</a>
-      </div>
-    );
-  }
+export default function AccountPage() {
+  const [email, setEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      setEmail(data.user?.email ?? null);
+    });
+  }, []);
 
   return (
-    <div className="p-4 space-y-4">
-      <h1 className="text-xl font-bold">Bienvenue, {user.email}</h1>
+    <div className="p-4">
+      <h1 className="text-xl font-bold">Compte utilisateur</h1>
+      <p>Email : {email}</p>
       <LogoutButton />
     </div>
   );
