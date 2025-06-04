@@ -8,12 +8,16 @@ export default async function AccountPage() {
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
-    return <p>Non connecté.</p>;
+    return (
+      <div className="p-4 text-red-600">
+        Non connecté. <a href="/(auth)/login" className="underline">Se connecter</a>
+      </div>
+    );
   }
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-bold">Bienvenue, {user.email}</h2>
+    <div className="p-4 space-y-4">
+      <h1 className="text-xl font-bold">Bienvenue, {user.email}</h1>
       <LogoutButton />
     </div>
   );
