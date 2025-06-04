@@ -1,20 +1,17 @@
-import '../styles/globals.css' // ✅ Corrigé
-import { Inter } from 'next/font/google'
-import { Providers } from '@/components/Providers'
-
-const inter = Inter({ subsets: ['latin'] })
+import './globals.css';
+import { Providers } from '@/components/Providers';
 
 export const metadata = {
   title: 'DEAD ANGLE',
-  description: 'Marketplace fun & sarcastique avec points DDAGL',
-}
+  description: 'Marketplace fun & absurde',
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
-      <body className={inter.className}>
+      <body>
         <Providers>{children}</Providers>
       </body>
     </html>
-  )
+  );
 }
