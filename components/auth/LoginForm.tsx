@@ -1,42 +1,42 @@
-'use client'
+// components/auth/LoginForm.tsx
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 export default function LoginForm() {
-  const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    // Simulation d’authentification
-    if (email && password) {
-      router.push('/dashboard')
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      setMessage(error.message);
+    } else {
+      setMessage("Connexion réussie !");
     }
-  }
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleLogin} className="space-y-4">
       <input
         type="email"
         placeholder="Email"
-        className="w-full p-3 border rounded-xl"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        required
+        className="w-full p-2 border rounded"
       />
       <input
         type="password"
         placeholder="Mot de passe"
-        className="w-full p-3 border rounded-xl"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        required
+        className="w-full p-2 border rounded"
       />
-      <button type="submit" className="w-full bg-ddagl-indigo text-white py-3 rounded-xl">
-        Se connecter
-      </button>
+      <button type="submit" className="bg-black text-white px-4 py-2 rounded">Se connecter</button>
+      {message && <p>{message}</p>}
     </form>
-  )
+  );
 }
