@@ -1,19 +1,18 @@
-'use client';
+'use client'
+import { supabase } from '@/lib/supabase'
 
-import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
-
-export default function LogoutButton() {
-  const router = useRouter();
-
+export function LogoutButton() {
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.refresh();
-  };
+    await supabase.auth.signOut()
+    window.location.href = '/login'
+  }
 
   return (
-    <button onClick={handleLogout} className="text-red-500 hover:underline">
+    <button 
+      onClick={handleLogout}
+      className="px-4 py-2 bg-red-500 text-white rounded-lg"
+    >
       Déconnexion
     </button>
-  );
+  )
 }
