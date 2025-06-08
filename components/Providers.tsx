@@ -1,13 +1,9 @@
-'use client'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { SessionContextProvider } from '@supabase/auth-helpers-react'
+// components/Providers.tsx
+'use client';
 
-export function Providers({ children }: { children: React.ReactNode }) {
-  const supabase = createClientComponentClient()
+import { SessionProvider } from 'next-auth/react';
+import { ReactNode } from 'react';
 
-  return (
-    <SessionContextProvider supabaseClient={supabase}>
-      {children}
-    </SessionContextProvider>
-  )
+export function Providers({ children }: { children: ReactNode }) {
+  return <SessionProvider>{children}</SessionProvider>;
 }
