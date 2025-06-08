@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
-import LogoutButton from '@/components/auth/LogoutButton';
+import { LogoutButton } from '@/components/auth/LogoutButton';
 
 export default function AccountPage() {
   const [email, setEmail] = useState<string | null>(null);
